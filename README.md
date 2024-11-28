@@ -10,3 +10,4 @@
 ## coupon-core
 - 공통으로 사용하는 모듈
 - entity 정의, repository 동일 코드 등 사용
+- 
