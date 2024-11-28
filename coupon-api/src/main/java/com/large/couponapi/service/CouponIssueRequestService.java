@@ -12,18 +12,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CouponIssueRequestService {
     private final CouponIssueService couponIssueService;
-    private final DistributeLockExecutor distributeLockExecutor;
     public void issueRequestV1(CouponIssueRequestDto requestDto) {
-        distributeLockExecutor.execute(
-                getLockName(requestDto.couponId()),
-                10000,
-                10000,
-                () -> couponIssueService.issue(requestDto.couponId(), requestDto.userId())
-        );
+        couponIssueService.issue(requestDto.couponId(), requestDto.userId());
         log.info("쿠폰 발급 완료. couponI:d %s, userId: %s".formatted(requestDto.couponId(), requestDto.userId()));
-    }
-
-    private String getLockName(Long couponId) {
-        return "lock_" + couponId;
     }
 }
