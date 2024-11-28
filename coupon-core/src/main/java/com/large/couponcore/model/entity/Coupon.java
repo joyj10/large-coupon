@@ -44,10 +44,10 @@ public class Coupon extends BaseTimeEntity {
     private int minAvailableAmount;
 
     @Column(nullable = false)
-    private LocalDateTime dataIssuedStart;
+    private LocalDateTime dateIssueStart;
 
     @Column(nullable = false)
-    private LocalDateTime dataIssuedEnd;
+    private LocalDateTime dateIssueEnd;
 
     public boolean availableIssueQuantity() {
         if (totalQuantity == null) {
@@ -58,7 +58,7 @@ public class Coupon extends BaseTimeEntity {
 
     public boolean availableIssueDate() {
         LocalDateTime now = LocalDateTime.now();
-        return dataIssuedStart.isBefore(now) && dataIssuedEnd.isAfter(now);
+        return dateIssueStart.isBefore(now) && dateIssueEnd.isAfter(now);
     }
 
     public void issue() {
@@ -69,7 +69,7 @@ public class Coupon extends BaseTimeEntity {
 
         if (!availableIssueDate()) {
             throw new CouponIssueException(INVALID_COUPON_ISSUE_DATE,
-                    "발급 가능한 일자가 아닙니다. request %s, issueStart: %s, issueEnd: %s".formatted(LocalDateTime.now(), dataIssuedStart, dataIssuedEnd));
+                    "발급 가능한 일자가 아닙니다. request %s, issueStart: %s, issueEnd: %s".formatted(LocalDateTime.now(), dateIssueStart, dateIssueEnd));
         }
 
         issuedQuantity++;

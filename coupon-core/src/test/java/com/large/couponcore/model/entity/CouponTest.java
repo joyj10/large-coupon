@@ -66,8 +66,8 @@ class CouponTest {
     void availableIssueDate_1() {
         // given
         Coupon coupon = Coupon.builder()
-                .dataIssuedStart(LocalDateTime.now().plusDays(1))
-                .dataIssuedEnd(LocalDateTime.now().plusDays(2))
+                .dateIssueStart(LocalDateTime.now().plusDays(1))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
         // when
@@ -82,8 +82,8 @@ class CouponTest {
     void availableIssueDate_2() {
         // given
         Coupon coupon = Coupon.builder()
-                .dataIssuedStart(LocalDateTime.now().minusDays(1))
-                .dataIssuedEnd(LocalDateTime.now().plusDays(2))
+                .dateIssueStart(LocalDateTime.now().minusDays(1))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
         // when
@@ -98,8 +98,8 @@ class CouponTest {
     void availableIssueDate_3() {
         // given
         Coupon coupon = Coupon.builder()
-                .dataIssuedStart(LocalDateTime.now().minusDays(2))
-                .dataIssuedEnd(LocalDateTime.now().minusDays(1))
+                .dateIssueStart(LocalDateTime.now().minusDays(2))
+                .dateIssueEnd(LocalDateTime.now().minusDays(1))
                 .build();
 
         // when
@@ -116,8 +116,8 @@ class CouponTest {
         Coupon coupon = Coupon.builder()
                 .totalQuantity(100)
                 .issuedQuantity(99)
-                .dataIssuedStart(LocalDateTime.now().minusDays(1))
-                .dataIssuedEnd(LocalDateTime.now().plusDays(2))
+                .dateIssueStart(LocalDateTime.now().minusDays(1))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
         // when
@@ -134,8 +134,8 @@ class CouponTest {
         Coupon coupon = Coupon.builder()
                 .totalQuantity(100)
                 .issuedQuantity(100)
-                .dataIssuedStart(LocalDateTime.now().minusDays(1))
-                .dataIssuedEnd(LocalDateTime.now().plusDays(2))
+                .dateIssueStart(LocalDateTime.now().minusDays(1))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
         // when & then
@@ -150,8 +150,8 @@ class CouponTest {
         Coupon coupon = Coupon.builder()
                 .totalQuantity(100)
                 .issuedQuantity(99)
-                .dataIssuedStart(LocalDateTime.now().plusDays(1))
-                .dataIssuedEnd(LocalDateTime.now().plusDays(2))
+                .dateIssueStart(LocalDateTime.now().plusDays(1))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
                 .build();
 
         // when & then
