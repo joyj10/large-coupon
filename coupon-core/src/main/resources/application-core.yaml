@@ -18,10 +18,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  cache:
+    type: redis
   data:
     redis:
       host: localhost
       port: 6380
+logging:
+  level:
+    org.springframework.cache: DEBUG
+
 ---
 spring:
   config:
