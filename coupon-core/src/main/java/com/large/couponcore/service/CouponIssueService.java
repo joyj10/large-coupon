@@ -3,10 +3,12 @@ package com.large.couponcore.service;
 import com.large.couponcore.exception.CouponIssueException;
 import com.large.couponcore.model.entity.Coupon;
 import com.large.couponcore.model.entity.CouponIssue;
+import com.large.couponcore.model.event.CouponIssueCompleteEvent;
 import com.large.couponcore.repository.mysql.CouponIssueJpaRepository;
 import com.large.couponcore.repository.mysql.CouponIssueRepository;
 import com.large.couponcore.repository.mysql.CouponJpaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ public class CouponIssueService {
     private final CouponJpaRepository couponJpaRepository;
     private final CouponIssueJpaRepository couponIssueJpaRepository;
     private final CouponIssueRepository couponIssueRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
     public void issue(long couponId, long userId) {
@@ -27,6 +30,14 @@ public class CouponIssueService {
         coupon.issue();
 
         saveCouponIssue(couponId, userId);
+        publishCouponEvent(coupon);
+    }
+
+    // 발급 수량이 모두 소진되는 경우 이벤트 발행
+    private void publishCouponEvent(Coupon coupon) {
+        if (coupon.isIssueComplete()) {
+            applicationEventPublisher.publishEvent(new CouponIssueCompleteEvent(coupon.getId()));
+        }
     }
 
     @Transactional

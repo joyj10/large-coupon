@@ -159,4 +159,58 @@ class CouponTest {
         assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.INVALID_COUPON_ISSUE_DATE);
     }
 
+    @DisplayName("발급 기간이 종료되면 true 반환 한다.")
+    @Test
+    void isIssueComplete() {
+        // given
+        Coupon coupon = Coupon.builder()
+                .totalQuantity(100)
+                .issuedQuantity(0)
+                .dateIssueStart(LocalDateTime.now().minusDays(3))
+                .dateIssueEnd(LocalDateTime.now().minusDays(2))
+                .build();
+
+        // when
+        boolean result = coupon.isIssueComplete();
+
+        // then
+        assertTrue(result);
+    }
+
+    @DisplayName("잔여 발급 가능 수량이 없다면 true 반환 한다.")
+    @Test
+    void isIssueComplete_2() {
+        // given
+        Coupon coupon = Coupon.builder()
+                .totalQuantity(100)
+                .issuedQuantity(100)
+                .dateIssueStart(LocalDateTime.now().minusDays(3))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
+                .build();
+
+        // when
+        boolean result = coupon.isIssueComplete();
+
+        // then
+        assertTrue(result);
+    }
+
+    @DisplayName("발급 기한과 수량이 유효하면 false 반환 한다.")
+    @Test
+    void isIssueComplete_3() {
+        // given
+        Coupon coupon = Coupon.builder()
+                .totalQuantity(100)
+                .issuedQuantity(0)
+                .dateIssueStart(LocalDateTime.now().minusDays(3))
+                .dateIssueEnd(LocalDateTime.now().plusDays(2))
+                .build();
+
+        // when
+        boolean result = coupon.isIssueComplete();
+
+        // then
+        assertFalse(result);
+    }
+
 }

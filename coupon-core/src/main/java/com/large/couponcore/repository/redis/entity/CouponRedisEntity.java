@@ -11,11 +11,13 @@ import com.large.couponcore.model.entity.Coupon;
 import java.time.LocalDateTime;
 
 import static com.large.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_DATE;
+import static com.large.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
 
 public record CouponRedisEntity(
         Long id,
         CouponType couponType,
         Integer totalQuantity,
+        boolean availableIssueQuantity,
 
         @JsonSerialize(using = LocalDateTimeSerializer.class)
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -30,6 +32,7 @@ public record CouponRedisEntity(
                 coupon.getId(),
                 coupon.getCouponType(),
                 coupon.getTotalQuantity(),
+                coupon.availableIssueQuantity(),
                 coupon.getDateIssueStart(),
                 coupon.getDateIssueEnd()
         );
@@ -41,6 +44,9 @@ public record CouponRedisEntity(
     }
 
     public void checkIssuableCoupon() {
+        if (!availableIssueQuantity) {
+            throw new CouponIssueException(INVALID_COUPON_ISSUE_QUANTITY, INVALID_COUPON_ISSUE_QUANTITY.message + " couponId: %s".formatted(id));
+        }
         if (!availableIssueDate()) {
             throw new CouponIssueException(INVALID_COUPON_ISSUE_DATE, INVALID_COUPON_ISSUE_DATE.message + " couponId: %s, issueStart: %s, issueEnd".formatted(id, dateIssueStart, dateIssueEnd));
         }

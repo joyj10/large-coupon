@@ -11,6 +11,7 @@ dependencies {
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.github.ben-manes.caffeine:caffeine")    // 로컬 캐시 적용 의존성
 }
 
 tasks.withType<Test> {
