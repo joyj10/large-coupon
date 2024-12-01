@@ -24,9 +24,6 @@ spring:
     redis:
       host: localhost
       port: 6380
-logging:
-  level:
-    org.springframework.cache: DEBUG
 
 ---
 spring:

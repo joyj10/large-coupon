@@ -7,9 +7,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-
     implementation("org.redisson:redisson-spring-boot-starter:3.23.2")
 
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")

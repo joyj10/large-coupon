@@ -1,6 +1,10 @@
 spring:
   application:
     name: coupon-consumer
-
+  data:
+    redis:
+      host: localhost
+      port: 6380
 server:
   port: 8081
+
