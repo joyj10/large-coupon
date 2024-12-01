@@ -7,4 +7,18 @@ spring:
       port: 6380
 server:
   port: 8081
+  tomcat:
+    mbeanregistry:
+      enabled: true
+management:
+  metrics:
+    tags:
+      application:
+        ${spring.application.name}
+  endpoints:
+    prometheus:
+      enabled: true
+    web:
+      exposure:
+        include: prometheus
 
